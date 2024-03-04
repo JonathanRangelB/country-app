@@ -11,10 +11,13 @@ import { Country } from '../../interfaces/country';
 export class ByCapitalPageComponent {
   countriesService = inject(CountriesService);
   countries: Country[] = [];
+  isLoading = false;
 
   searchByCapital(term: string) {
+    this.isLoading = true;
     this.countriesService.searchCapital(term).subscribe((country) => {
       this.countries = country;
+      this.isLoading = false;
     });
   }
 }
