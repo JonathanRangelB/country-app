@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CountriesService } from '../../services/countries.service';
 import { Country } from '../../interfaces/country';
 
@@ -8,10 +8,16 @@ import { Country } from '../../interfaces/country';
   templateUrl: './by-capital-page.component.html',
   styles: ``,
 })
-export class ByCapitalPageComponent {
+export class ByCapitalPageComponent implements OnInit {
   countriesService = inject(CountriesService);
   countries: Country[] = [];
   isLoading = false;
+  initialValue = '';
+
+  ngOnInit(): void {
+    this.countries = this.countriesService.cacheStore.byCapital.countries;
+    this.initialValue = this.countriesService.cacheStore.byCapital.term;
+  }
 
   searchByCapital(term: string) {
     this.isLoading = true;
